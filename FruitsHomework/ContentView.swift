@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import Foundation
+import Combine
 
 struct ContentView: View {
+    @StateObject var fruitsVM = FruitsViewModel()
+    
     var body: some View {
         VStack {
             Image(systemName: "globe")
