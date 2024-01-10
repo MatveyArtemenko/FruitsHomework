@@ -5,20 +5,50 @@
 //  Created by Matvii Artemenko on 08/01/2024.
 //
 
-import SwiftUI
 import Foundation
+import SwiftUI
 
 struct ContentView: View {
     @StateObject var fruitsVM = FruitsViewModel()
-    @StateObject var StatisticVM = StatisticsManager()
+    @StateObject var statisticM = StatisticsManager()
+    @State private var startTime: DispatchTime = .now()
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationStack {
+            VStack {
+                List {
+                    ForEach(fruitsVM.fruits, id: \.self) { fruit in
+
+                        NavigationLink {
+                            FruitDetailView(fruit: fruit, startTime: startTime, statisticsM: statisticM)
+
+                        } label: {
+
+                            VStack(alignment: .leading) {
+                                Text(fruit.type.capitalized)
+                                    .font(.title)
+                                    .bold()
+                                Spacer()
+
+                            }
+                            .padding(.horizontal)
+
+                        }
+
+                    }
+
+                }
+
+            }
+            .refreshable {
+                statisticM.networkCallStats {
+                    fruitsVM.getFruits()
+                }
+            }
+            .onDisappear {
+                statisticM.startTime = .now()
+
+            }
         }
-        .padding()
     }
 }
 

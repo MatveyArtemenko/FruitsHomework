@@ -11,7 +11,7 @@ struct FruitsResponse: Codable {
     let fruit: [Fruit]
 }
 
-struct Fruit: Codable {
+struct Fruit: Codable, Hashable {
     let type: String
     let price: Int
     let weight: Int

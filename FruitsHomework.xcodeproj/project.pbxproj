@@ -15,6 +15,7 @@
 		8449EE832B4CA927001A7781 /* FruitsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449EE822B4CA927001A7781 /* FruitsResponse.swift */; };
 		8449EE872B4D7F01001A7781 /* FruitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449EE862B4D7F01001A7781 /* FruitsViewModel.swift */; };
 		8449EE892B4ED5B2001A7781 /* StatisticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449EE882B4ED5B2001A7781 /* StatisticsManager.swift */; };
+		8449EE8D2B4F0172001A7781 /* FruitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449EE8C2B4F0172001A7781 /* FruitDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		8449EE822B4CA927001A7781 /* FruitsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitsResponse.swift; sourceTree = "<group>"; };
 		8449EE862B4D7F01001A7781 /* FruitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitsViewModel.swift; sourceTree = "<group>"; };
 		8449EE882B4ED5B2001A7781 /* StatisticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsManager.swift; sourceTree = "<group>"; };
+		8449EE8C2B4F0172001A7781 /* FruitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 			children = (
 				8449EE722B4C9AC4001A7781 /* FruitsHomeworkApp.swift */,
 				8449EE742B4C9AC4001A7781 /* ContentView.swift */,
+				8449EE8C2B4F0172001A7781 /* FruitDetailView.swift */,
 				8449EE862B4D7F01001A7781 /* FruitsViewModel.swift */,
 				8449EE882B4ED5B2001A7781 /* StatisticsManager.swift */,
 				8449EE802B4C9F4C001A7781 /* NetworkManager.swift */,
@@ -155,6 +158,7 @@
 				8449EE732B4C9AC4001A7781 /* FruitsHomeworkApp.swift in Sources */,
 				8449EE892B4ED5B2001A7781 /* StatisticsManager.swift in Sources */,
 				8449EE832B4CA927001A7781 /* FruitsResponse.swift in Sources */,
+				8449EE8D2B4F0172001A7781 /* FruitDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
