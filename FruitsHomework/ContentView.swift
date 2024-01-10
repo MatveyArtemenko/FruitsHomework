@@ -7,11 +7,10 @@
 
 import SwiftUI
 import Foundation
-import Combine
 
 struct ContentView: View {
     @StateObject var fruitsVM = FruitsViewModel()
-    
+    @StateObject var StatisticVM = StatisticsManager()
     var body: some View {
         VStack {
             Image(systemName: "globe")

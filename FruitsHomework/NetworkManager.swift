@@ -11,7 +11,7 @@ import Foundation
 class Network {
     static let shared = Network()
 
-    let urlSession = URLSession(configuration: .default)
+    private let urlSession = URLSession(configuration: .default)
 
     func getData<T: Codable>(with url: URL) -> AnyPublisher<T, Error> {
         urlSession.dataTaskPublisher(for: url)
@@ -27,10 +27,30 @@ class Network {
             }
             .decode(type: T.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
+    }
+
+    func sendData(with url: URL) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            self?.printJSON(data: data)
+            do {
+                let response = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                print("Success: \(response)")
+            } catch {
+                print(error)
+            }
+        }
+        task.resume()
 
     }
 
-    func printJSON(data: Data) {
+    private func printJSON(data: Data) {
         if let json = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed),
            let data = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]),
            let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
