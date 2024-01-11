@@ -16,7 +16,7 @@ class StatisticsManager: ObservableObject {
             block()
         }
         let duration = result.description.trimmingCharacters(in: .letters)
-//        print("result = \(duration)")
+        print("result = \(duration)")
         getStats(for: .load, "\(duration.trimmingCharacters(in: .whitespacesAndNewlines))")
     }
 
@@ -31,9 +31,18 @@ class StatisticsManager: ObservableObject {
         let elapsedTime = endTime.uptimeNanoseconds - startTime.uptimeNanoseconds
         let elapsedTimeInMilliSeconds = Double(elapsedTime) / 1_000_000.0
         print("Display event: \(elapsedTimeInMilliSeconds) ms")
-
         getStats(for: .display, String(elapsedTimeInMilliSeconds))
 
+    }
+    
+    func errorEventStats(block: () throws -> ()) {
+        do {
+            try block()
+        } catch {
+            print("error occured: \(error.localizedDescription.trimmingCharacters(in: .whitespacesAndNewlines))")
+            getStats(for: .error, error.localizedDescription.trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+        
     }
 
     func getStats(for event: ScreeningEvents, _ data: String) {

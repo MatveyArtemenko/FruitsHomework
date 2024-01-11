@@ -23,9 +23,14 @@ class FruitsViewModel: ObservableObject {
 
         Network.shared.getData(with: url)
             .sink { completion in
-//                print("Completion: \(completion)")
+                switch completion {
+                case .failure(let error):
+                    print("Failure: \(error)")
+                case .finished:
+                    print("Completion: \(completion)")
+
+                }
             } receiveValue: { [weak self] (fruitsResponse: FruitsResponse) in
-//                print(fruitsResponse.fruit.count)
                 self?.fruits = fruitsResponse.fruit
             }
             .store(in: &cancellables)

@@ -19,6 +19,7 @@ class Network {
             .tryMap { data, response in
                 guard let response = response as? HTTPURLResponse,
                       response.statusCode >= 200, response.statusCode < 300
+                        
                 else {
                     throw URLError(.badServerResponse)
                 }
@@ -31,16 +32,18 @@ class Network {
 
     func sendData(with url: URL) {
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = "GET" // suppose "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
             guard let data = data, error == nil else {
                 return
             }
-            self?.printJSON(data: data)
+//            self?.printJSON(data: data)
             do {
-                let response = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                let response = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+//                self?.printJSON(data: data)
+
                 print("Success: \(response)")
             } catch {
                 print(error)
