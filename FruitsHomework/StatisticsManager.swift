@@ -10,7 +10,8 @@ import Foundation
 class StatisticsManager: ObservableObject {
     @Published var startTime: DispatchTime?
 
-    func networkCallStats(block: () -> ()) {
+    @discardableResult
+    func networkCallStats(block: () -> ()) -> Double {
         let clock = ContinuousClock()
         let result = clock.measure {
             block()
@@ -18,12 +19,14 @@ class StatisticsManager: ObservableObject {
         let duration = result.description.trimmingCharacters(in: .letters)
         print("result = \(duration)")
         getStats(for: .load, "\(duration.trimmingCharacters(in: .whitespacesAndNewlines))")
+        return Double(result.components.seconds)
     }
 
-    func displayEventStats() {
+    @discardableResult
+    func displayEventStats() -> Double {
 
         guard let startTime = startTime else {
-            return
+            return 0.0
         }
         print("\(startTime.uptimeNanoseconds)")
         let endTime = DispatchTime.now()
@@ -33,6 +36,7 @@ class StatisticsManager: ObservableObject {
         print("Display event: \(elapsedTimeInMilliSeconds) ms")
         getStats(for: .display, String(elapsedTimeInMilliSeconds))
 
+        return elapsedTimeInMilliSeconds
     }
     
     func errorEventStats(block: () throws -> ()) {
@@ -45,14 +49,16 @@ class StatisticsManager: ObservableObject {
         
     }
 
-    func getStats(for event: ScreeningEvents, _ data: String) {
+    @discardableResult
+    func getStats(for event: ScreeningEvents, _ data: String) -> String {
         let urlString = "https://raw.githubusercontent.com/fmtvp/recruit-test-data/master/stats?event=\(event.rawValue)&data=\(data)"
 //        print("Url: \(urlString)")
         guard let url = URL(string: urlString) else {
-            return
+            return ""
         }
 
         Network.shared.sendData(with: url)
+        return urlString
     }
 }
 
