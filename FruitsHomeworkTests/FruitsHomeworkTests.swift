@@ -68,10 +68,16 @@ final class FruitsHomeworkTests: XCTestCase {
         // Given
         let manager = StatisticsManager()
         manager.startTime = .now()
-        var expectation = XCTestExpectation(description: "Async operation expectation")
-
+        let expectation = XCTestExpectation(description: "Async operation expectation")
+        var duration = 0.0
         // When
-        let duration = manager.displayEventStats()
+        let result = manager.displayEventStats()
+        switch result {
+        case .success(let success):
+            duration = success
+        case .failure(let failure):
+            XCTFail(failure.localizedDescription)
+        }
         expectation.fulfill()
 
         // Then
@@ -84,13 +90,20 @@ final class FruitsHomeworkTests: XCTestCase {
         let manager = StatisticsManager()
         let randomData = Int.random(in: 1 ..< 9999)
         let event = ScreeningEvents.display
-        let urlString = "https://raw.githubusercontent.com/fmtvp/recruit-test-data/master/stats?event=\(event.rawValue)&data=\(randomData)"
+        let testUrlString = "https://raw.githubusercontent.com/fmtvp/recruit-test-data/master/stats?event=\(event.rawValue)&data=\(randomData)"
+        var statUrl = ""
 
         // When
-        let statUrl = manager.getStats(for: event, "\(randomData)")
+        let result = manager.getStats(for: event, "\(randomData)")
 
+        switch result {
+        case .success(let success):
+            statUrl = success
+        case .failure(let failure):
+            XCTFail(failure.localizedDescription)
+        }
         // Then
-        XCTAssertEqual(statUrl, urlString)
+        XCTAssertEqual(statUrl, testUrlString)
     }
 
     func test_NetworkManager_getData_requestShouldNotFail() {
@@ -112,6 +125,29 @@ final class FruitsHomeworkTests: XCTestCase {
                 expectation.fulfill()
             } receiveValue: { (_: FruitsResponse) in }
             .store(in: &cancellables)
+
+        // Then
+
+        wait(for: [expectation], timeout: 5.0)
+
+    }
+    
+    func test_NetworkManager_sendData_requestShouldNotFail() {
+        // Given
+        let expectation = XCTestExpectation(description: "Send data to the server")
+        let testURL = URL(string: "https://raw.githubusercontent.com/fmtvp/recruit-test-data/master/data.json")!
+
+        // When
+
+        Network.shared.sendData(with: testURL, completion: { result in
+            switch result {
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
+                
+            case .success(_):
+                expectation.fulfill()
+            }
+        })
 
         // Then
 

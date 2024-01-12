@@ -35,10 +35,13 @@ struct FruitDetailView: View {
             Spacer()
         }
         .onAppear {
-            statisticsM.networkCallStats {
-                statisticsM.displayEventStats()
+            statisticsM.errorEventStats {
+                statisticsM.networkCallStats {
+                    statisticsM.displayEventStats()
 
+                }
             }
+            
         }
     }
 

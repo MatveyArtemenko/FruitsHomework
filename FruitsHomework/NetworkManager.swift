@@ -8,20 +8,26 @@
 import Combine
 import Foundation
 
-class Network {
-    static let shared = Network()
+protocol NetworkProtocol {
+    func getData<T: Codable>(with url: URL) -> AnyPublisher<T, Error>
+    func sendData(with url: URL, completion: @escaping (Result<Data, Error>) -> ())
+}
+
+class Network: NetworkProtocol {
+    static let shared: NetworkProtocol = Network()
 
     private let urlSession = URLSession(configuration: .default)
 
+    // Network call for getting data from api
     func getData<T: Codable>(with url: URL) -> AnyPublisher<T, Error> {
         urlSession.dataTaskPublisher(for: url)
             .receive(on: DispatchQueue.main)
             .tryMap { data, response in
                 guard let response = response as? HTTPURLResponse,
                       response.statusCode >= 200, response.statusCode < 300
-                        
+
                 else {
-                    throw URLError(.badServerResponse)
+                    throw NetworkError.badServerResponse
                 }
 //                self.printJSON(data: data)
                 return data
@@ -30,35 +36,41 @@ class Network {
             .eraseToAnyPublisher()
     }
 
-    func sendData(with url: URL) {
+    // Network call for sending a Get request
+    func sendData(with url: URL, completion: @escaping (Result<Data, Error>) -> ()) {
         var request = URLRequest(url: url)
-        request.httpMethod = "GET" // suppose "POST"
+        request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, _, error in
-            guard let data = data, error == nil else {
+            guard let data = data else {
+                completion(.failure(NetworkError.noDataRecieved))
                 return
             }
-//            self?.printJSON(data: data)
-            do {
-                let response = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
-//                self?.printJSON(data: data)
-
-                print("Success: \(response)")
-            } catch {
-                print(error)
+            
+            if let error = error {
+                completion(.failure(error))
             }
+                self?.printJSON(data: data)
+            completion(.success(data))
         }
         task.resume()
 
     }
 
+    // function for formatting and printing parsed JSON data
     private func printJSON(data: Data) {
         if let json = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed),
            let data = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]),
            let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
         {
+            print("Success:")
             print(string)
         }
     }
+}
+
+enum NetworkError: LocalizedError {
+    case badServerResponse
+    case noDataRecieved
 }

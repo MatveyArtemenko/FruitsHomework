@@ -16,6 +16,7 @@ class FruitsViewModel: ObservableObject {
         getFruits()
     }
 
+    // Getting fruit array from an api call
     func getFruits() {
         guard let url = URL(string: "https://raw.githubusercontent.com/fmtvp/recruit-test-data/master/data.json") else {
             return

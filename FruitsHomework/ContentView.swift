@@ -25,29 +25,32 @@ struct ContentView: View {
 
                             VStack(alignment: .leading) {
                                 Text(fruit.type.capitalized)
-                                    .font(.title)
-                                    .bold()
-                                Spacer()
+                                    .font(.headline)
+                                    .padding(10)
 
                             }
-                            .padding(.horizontal)
 
                         }
 
                     }
 
                 }
+                .listStyle(.grouped)
 
             }
             .refreshable {
-                statisticM.networkCallStats {
-                    fruitsVM.getFruits()
+                statisticM.errorEventStats {
+                    statisticM.networkCallStats {
+                        fruitsVM.getFruits()
+                    }
                 }
+                
             }
             .onDisappear {
                 statisticM.startTime = .now()
 
             }
+            .navigationTitle("Fruits")
         }
     }
 }
