@@ -35,6 +35,8 @@ struct FruitDetailView: View {
             Spacer()
         }
         .onAppear {
+            // end point for statistics event (display)
+            // also chacking for errors and length of network call events
             statisticsM.errorEventStats {
                 statisticsM.networkCallStats {
                     statisticsM.displayEventStats()

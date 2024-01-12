@@ -39,6 +39,8 @@ struct ContentView: View {
 
             }
             .refreshable {
+                // calling fonctions to allow refresh list of fruits as part of the task
+                
                 statisticM.errorEventStats {
                     statisticM.networkCallStats {
                         fruitsVM.getFruits()
@@ -47,10 +49,11 @@ struct ContentView: View {
                 
             }
             .onDisappear {
+                // start point for statistics task (display)
                 statisticM.startTime = .now()
 
             }
-            .navigationTitle("Fruits")
+            .navigationTitle("FruitList")
         }
     }
 }
