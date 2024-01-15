@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FruitDetailView: View {
+    @Environment(\.dismiss) var dismiss
     let fruit: Fruit
     let startTime: DispatchTime
     @ObservedObject var statisticsM: StatisticsManager
@@ -16,7 +17,7 @@ struct FruitDetailView: View {
         VStack {
             Text(fruit.type.capitalized)
                 .font(.largeTitle)
-                .padding()
+                .padding(.vertical)
             HStack(alignment: .firstTextBaseline) {
 
                 VStack(alignment: .leading) {
@@ -43,8 +44,9 @@ struct FruitDetailView: View {
 
                 }
             }
-            
+
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 
 }
