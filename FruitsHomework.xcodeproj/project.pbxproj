@@ -17,6 +17,8 @@
 		8449EE892B4ED5B2001A7781 /* StatisticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449EE882B4ED5B2001A7781 /* StatisticsManager.swift */; };
 		8449EE8D2B4F0172001A7781 /* FruitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449EE8C2B4F0172001A7781 /* FruitDetailView.swift */; };
 		8449EE972B508519001A7781 /* FruitsHomeworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449EE962B508519001A7781 /* FruitsHomeworkTests.swift */; };
+		8449EEA02B52ECFD001A7781 /* TaskFruitListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8449EE9F2B52ECFD001A7781 /* TaskFruitListView.swift */; };
+		845B204F2B557297008DC047 /* CustomFruitListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845B204E2B557297008DC047 /* CustomFruitListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,8 @@
 		8449EE8C2B4F0172001A7781 /* FruitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitDetailView.swift; sourceTree = "<group>"; };
 		8449EE942B508519001A7781 /* FruitsHomeworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FruitsHomeworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8449EE962B508519001A7781 /* FruitsHomeworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitsHomeworkTests.swift; sourceTree = "<group>"; };
+		8449EE9F2B52ECFD001A7781 /* TaskFruitListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskFruitListView.swift; sourceTree = "<group>"; };
+		845B204E2B557297008DC047 /* CustomFruitListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFruitListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,8 @@
 			children = (
 				8449EE722B4C9AC4001A7781 /* FruitsHomeworkApp.swift */,
 				8449EE742B4C9AC4001A7781 /* ContentView.swift */,
+				845B204B2B557229008DC047 /* CustomScreens */,
+				8449EE9F2B52ECFD001A7781 /* TaskFruitListView.swift */,
 				8449EE8C2B4F0172001A7781 /* FruitDetailView.swift */,
 				8449EE862B4D7F01001A7781 /* FruitsViewModel.swift */,
 				8449EE882B4ED5B2001A7781 /* StatisticsManager.swift */,
@@ -110,6 +116,14 @@
 				8449EE962B508519001A7781 /* FruitsHomeworkTests.swift */,
 			);
 			path = FruitsHomeworkTests;
+			sourceTree = "<group>";
+		};
+		845B204B2B557229008DC047 /* CustomScreens */ = {
+			isa = PBXGroup;
+			children = (
+				845B204E2B557297008DC047 /* CustomFruitListView.swift */,
+			);
+			path = CustomScreens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,6 +232,8 @@
 				8449EE732B4C9AC4001A7781 /* FruitsHomeworkApp.swift in Sources */,
 				8449EE892B4ED5B2001A7781 /* StatisticsManager.swift in Sources */,
 				8449EE832B4CA927001A7781 /* FruitsResponse.swift in Sources */,
+				845B204F2B557297008DC047 /* CustomFruitListView.swift in Sources */,
+				8449EEA02B52ECFD001A7781 /* TaskFruitListView.swift in Sources */,
 				8449EE8D2B4F0172001A7781 /* FruitDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,30 +12,15 @@ struct ContentView: View {
     @StateObject var fruitsVM = FruitsViewModel()
     @StateObject var statisticM = StatisticsManager()
     @State private var startTime: DispatchTime = .now()
+    @State private var showCustomScreen = false
     var body: some View {
         NavigationStack {
             VStack {
-                List {
-                    ForEach(fruitsVM.fruits, id: \.self) { fruit in
-
-                        NavigationLink {
-                            FruitDetailView(fruit: fruit, startTime: startTime, statisticsM: statisticM)
-
-                        } label: {
-
-                            VStack(alignment: .leading) {
-                                Text(fruit.type.capitalized)
-                                    .font(.headline)
-                                    .padding(10)
-
-                            }
-
-                        }
-
-                    }
-
+                if showCustomScreen {
+                    CustomFruitListView(fruitsVM: fruitsVM, statisticM: statisticM, startTime: $startTime)
+                } else {
+                    TaskFruitListView(fruitsVM: fruitsVM, statisticM: statisticM, startTime: $startTime)
                 }
-                .listStyle(.grouped)
 
             }
             .refreshable {
@@ -54,6 +39,16 @@ struct ContentView: View {
 
             }
             .navigationTitle("FruitList")
+            .toolbar {
+                Button {
+                    withAnimation(.spring()) {
+                        showCustomScreen.toggle()
+                    }
+                } label: {
+                    Image(systemName: showCustomScreen ? "rectangle.grid.1x2.fill" : "rectangle.grid.2x2.fill")
+                        .foregroundColor(.primary)
+                }
+            }
         }
     }
 }
